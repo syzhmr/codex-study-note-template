@@ -1,0 +1,54 @@
+\title{勉強ノート}
+\author{}
+\date{}
+
+\usepackage{amsmath,amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{mathrsfs}
+\usepackage{otf}
+\usepackage{url}
+\usepackage[dvipdfmx]{hyperref}
+\usepackage{pxjahyper}
+
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\Coker}{Coker}
+\DeclareMathOperator{\Image}{Im}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\Gal}{Gal}
+\DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\Norm}{N}
+
+\theoremstyle{definition}
+\newtheorem{dfn}{定義}[chapter]
+\newtheorem{prop}[dfn]{命題}
+\newtheorem{lem}[dfn]{補題}
+\newtheorem{thm}[dfn]{定理}
+\newtheorem{cor}[dfn]{系}
+\newtheorem{ex}[dfn]{例}
+\newtheorem{rmk}[dfn]{注意}
+\newtheorem*{claim}{主張}
+\newtheorem*{finalnote}{補足}
+
+\newcommand{\sourcepage}[1]{\marginpar{\scriptsize Text p.#1}}
+\newcommand{\noterefpage}[1]{\marginpar{\scriptsize Note p.#1}}
+
+\makeatletter
+\def\@seccntformat#1{\csname the#1\endcsname\ }
+
+\renewenvironment{proof}[1][\proofname]{\par
+    \pushQED{\qed}%
+    \normalfont \topsep6\p@\@plus6\p@\relax
+    \trivlist
+    \item\relax
+    {\bfseries
+    #1\@addpunct{.}}\hspace\labelsep\ignorespaces
+}{%
+    \popQED\endtrivlist\@endpefalse
+}
+
+\renewcommand{\proofname}{証明}
+\makeatother
+
