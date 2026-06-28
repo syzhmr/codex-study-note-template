@@ -10,6 +10,10 @@
 \usepackage{url}
 \usepackage[dvipdfmx]{hyperref}
 \usepackage{pxjahyper}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usetikzlibrary{cd}
 
 \DeclareMathOperator{\id}{id}
 \DeclareMathOperator{\Hom}{Hom}
@@ -21,23 +25,103 @@
 \DeclareMathOperator{\Tr}{Tr}
 \DeclareMathOperator{\Norm}{N}
 
-\theoremstyle{definition}
-\newtheorem{dfn}{定義}[chapter]
-\newtheorem{prop}[dfn]{命題}
-\newtheorem{lem}[dfn]{補題}
-\newtheorem{thm}[dfn]{定理}
-\newtheorem{cor}[dfn]{系}
-\newtheorem{ex}[dfn]{例}
-\newtheorem{rmk}[dfn]{注意}
-\newtheorem*{claim}{主張}
-\newtheorem*{finalnote}{補足}
-
+\newcommand{\todo}[1]{\par\noindent\textbf{TODO.} #1\par}
+\newcommand{\localqed}{\unskip\nobreak\mbox{\normalfont ♪}}
 \newcommand{\sourcepage}[1]{\marginpar{\scriptsize Text p.#1}}
 \newcommand{\noterefpage}[1]{\marginpar{\scriptsize Note p.#1}}
 
+\definecolor{noteLightLine}{gray}{0.82}
+\definecolor{noteBadgeBack}{gray}{0.80}
+
+\makeatletter
+\newcommand{\noteenvtitle}[2]{%
+    \def\note@arg{#2}%
+    \ifx\note@arg\@empty #1\else #2\fi}
+\newcommand{\noteenvhead}[2]{%
+    \par\medskip\noindent\textbf{\noteenvtitle{#1}{#2}.}\ }
+\newcommand{\noteauxlabel}[2]{%
+    #1%
+    \def\note@arg{#2}%
+    \ifx\note@arg\@empty\else\ (#2)\fi}
+\newcommand{\noteauxstart}[2]{%
+    \par\medskip
+    \begin{list}{}{\leftmargin=1.5em\rightmargin=0pt\topsep=0pt\parsep=0.3\baselineskip\itemsep=0pt}%
+    \item[]\textbf{\noteauxlabel{#1}{#2}.}\ }
+\newcommand{\noteauxend}{\end{list}\medskip}
+\newcommand{\notelabel}[1]{\phantomsection\label{#1}}
+\newcommand{\dfnref}[1]{\hyperref[dfn:#1]{定義~#1}}
+\newcommand{\propref}[1]{\hyperref[prop:#1]{命題~#1}}
+\newcommand{\thmref}[1]{\hyperref[thm:#1]{定理~#1}}
+\newcommand{\corref}[1]{\hyperref[cor:#1]{系~#1}}
+\newcommand{\lemref}[1]{\hyperref[lem:#1]{補題~#1}}
+\newcommand{\claimref}[1]{\hyperref[claim:#1]{主張~#1}}
+\newcommand{\rmkref}[1]{\hyperref[rmk:#1]{注意~#1}}
+\newcommand{\exref}[1]{\hyperref[ex:#1]{例~#1}}
+\newcommand{\namedref}[2]{\hyperref[#1]{#2}}
+\makeatother
+
+\ExplSyntaxOn
+\cs_new_protected:Npn \note_print_title_tail:nn #1#2
+  {
+    \tl_set:Nn \l_tmpa_tl {#2}
+    \tl_if_blank:VTF \l_tmpa_tl
+      {}
+      {
+        \regex_replace_once:nnN { \A \s* #1 \s* } {} \l_tmpa_tl
+        \tl_if_blank:VTF \l_tmpa_tl {} { \hspace{0.45em}\textbf{\tl_use:N \l_tmpa_tl} }
+      }
+  }
+\NewDocumentCommand{\noteenvtail}{mm}{\note_print_title_tail:nn{#1}{#2}}
+\ExplSyntaxOff
+
+\newcommand{\noteenvbadge}[1]{%
+    \tcbox[
+        on line,
+        box align=base,
+        boxrule=0pt,
+        arc=2pt,
+        left=0.3em,
+        right=0.3em,
+        top=0.08em,
+        bottom=0.08em,
+        colback=noteBadgeBack,
+        colframe=white
+    ]{\bfseries #1}}
+\newcommand{\noteinlineenvhead}[2]{%
+    \par\medskip\noindent\noteenvbadge{#1\noteenvtail{#1}{#2}}\quad\ignorespaces}
+\newcommand{\notelineenvhead}[2]{%
+    \noindent\textbf{#1\noteenvtail{#1}{#2}.}\quad\ignorespaces}
+
+\newtcolorbox{notelineenvbox}[1]{%
+    enhanced jigsaw,
+    breakable,
+    frame hidden,
+    interior hidden,
+    boxrule=0pt,
+    sharp corners,
+    borderline west={4pt}{0pt}{#1},
+    left=1.65em,
+    right=0pt,
+    top=0.2em,
+    bottom=0.2em,
+    before skip=0.9\baselineskip,
+    after skip=0.9\baselineskip}
+
+\newenvironment{dfn}[1][]{\noteinlineenvhead{定義}{#1}}{\par\medskip}
+\newenvironment{prop}[1][]{\begin{notelineenvbox}{noteLightLine}\notelineenvhead{命題}{#1}}{\end{notelineenvbox}}
+\newenvironment{thm}[1][]{\begin{notelineenvbox}{black}\notelineenvhead{定理}{#1}}{\end{notelineenvbox}}
+\newenvironment{cor}[1][]{\begin{notelineenvbox}{noteLightLine}\notelineenvhead{系}{#1}}{\end{notelineenvbox}}
+\newenvironment{lem}[1][]{\begin{notelineenvbox}{noteLightLine}\notelineenvhead{補題}{#1}}{\end{notelineenvbox}}
+\newenvironment{claim}[1][]{\begin{notelineenvbox}{noteLightLine}\notelineenvhead{主張}{#1}}{\end{notelineenvbox}}
+\newenvironment{rmk}[1][]{\noteenvhead{注意}{#1}}{\par\medskip}
+\newenvironment{ex}[1][]{\noteenvhead{例}{#1}}{\par\medskip}
+\newenvironment{recall}[1][]{\noteauxstart{確認}{#1}}{\noteauxend}
+\newenvironment{localdfn}[1][]{\noteauxstart{定義}{#1}}{\noteauxend}
+\newenvironment{gapnote}{\par\medskip\noindent\textbf{行間補足.}\ }{\par\medskip}
+\newenvironment{finalnote}{\par\medskip\noindent\ignorespaces}{\par\medskip}
+
 \makeatletter
 \def\@seccntformat#1{\csname the#1\endcsname\ }
-
 \renewenvironment{proof}[1][\proofname]{\par
     \pushQED{\qed}%
     \normalfont \topsep6\p@\@plus6\p@\relax
@@ -51,4 +135,3 @@
 
 \renewcommand{\proofname}{証明}
 \makeatother
-

@@ -9,6 +9,7 @@
 *.synctex.gz
 *.toc
 *.xdv
+*:Zone.Identifier
 
 main_final.pdf
 
@@ -22,4 +23,3 @@ references/pdfs/*
 !references/pdfs/.gitkeep
 work/*
 !work/.gitkeep
-

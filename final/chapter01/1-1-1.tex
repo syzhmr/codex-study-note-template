@@ -1,29 +1,32 @@
 \subsubsection{最初の小小節}
 
 ここに本文を書く。
+主テキストの順序を保ちつつ，必要な定義，文脈，証明の行間を自然な本文として補う。
 
-\begin{dfn}
+\begin{dfn}[定義 1.1]\notelabel{dfn:1.1}
 ここに定義を書く。
 \end{dfn}
 
-\begin{prop}
+\begin{prop}[命題 1.2]\notelabel{prop:1.2}
 ここに命題を書く。
 \end{prop}
 
 \begin{proof}
 ここに証明を書く。
-証明が長い場合は，必要に応じて局所的な主張を立てる。
+証明が長い場合は，主テキストと手書きノートから証明段階を読み取り，自然な段落と接続文で分ける。
 
-まず次を示す。
+まず次の主張を示す。
 
-\begin{claim}
+\begin{claim}\notelabel{claim:1.2.local}
 ここに証明内の局所的な主張を書く。
 \end{claim}
 
-\begin{proof}
-ここに局所的な主張の証明を書く。
-\end{proof}
+この主張は，定義に戻って必要な条件を確認すれば従う。
+ここに局所的な主張の証明を書く。\localqed
 
 以上から命題が従う。
 \end{proof}
 
+\begin{rmk}
+既に示した内容を再利用する場合は，同じ主張を再証明せず，たとえば \dfnref{1.1} や \claimref{1.2.local} のように参照する。
+\end{rmk}
