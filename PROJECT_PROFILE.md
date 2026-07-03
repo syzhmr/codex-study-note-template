@@ -18,6 +18,7 @@ Codex は `WORKFLOW_STEPS.md` を入口として読み，このファイルで�
 - テンプレート URL: <https://github.com/syzhmr/codex-study-note-template>
 - 推奨 devcontainer URL: <https://github.com/syzhmr/LaTeX/tree/main/.devcontainer>
 - 共有しない資料: 主テキスト PDF，個人ノート，権利上再配布できない参考文献 PDF，ビルド生成物。
+- Git 管理する例外資料: [例外があれば理由，権利，容量を記録する]
 
 ## 主テキスト
 
@@ -33,14 +34,24 @@ Codex は `WORKFLOW_STEPS.md` を入口として読み，このファイルで�
 - 役割: 理解の順序，証明の粒度，図式，注意点，補足，疑問点を反映するための主資料。
 - 優先度: ノートがある範囲では，説明密度と証明の行間を最優先で確認する。
 - 色・記号の意味: [例: 赤字=修正，青字=補足，黄色=参考文献候補]
+- 旧版資料の扱い: [旧版ノートや古い抽出画像を使うか，使わないか]
 
 ## 参考文献
 
 - 参考文献 PDF は `references/pdfs/` に置く。
-- 参考文献の棚卸しは `references/REFERENCE_INDEX.md` に書く。
+- 参考文献の棚卸しは `references/REFERENCE_INDEX.md`，`references/notes/reference_toc_classification.md`，`references/notes/reference_inventory_full.md` に書く。
 - 本文で使った箇所は `references/notes/` に記録する。
 - ローカル PDF を使う場合でも，可能なら公開 URL，定理番号，節番号，ページ番号を確認する。
 - 未確認のページ番号・定理番号を推測で書かない。
+
+## 用語・文体
+
+- 用語辞書: `TERM_DICTIONARY.md`
+- 用語候補: `TERM_DICTIONARY_CANDIDATES.md`
+- 文体資料: `references/notes/japanese_style.md`，`sources/translation_style/`
+- 証明執筆方針: `references/notes/proof_writing_guidance.md`
+- 用語の好み: [例: 人名は英字を保つ / 漢字表記にする]
+- 未承認語の扱い: 本文へ直接入れず，候補辞書またはユーザー確認に回す。
 
 ## 作業単位
 

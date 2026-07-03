@@ -2,54 +2,40 @@
 
 このテンプレートは，Codex との共同編集を Git で管理することを必須とする。
 Git は単なるバックアップではなく，Codex の作業監査ログとして使う。
+本文改訂，方針変更，参考文献台帳，修正文候補の変化を commit 単位で追えるようにする。
+この Git 方針も，軽量化ではなく再現性のための手順化として扱う。改訂時は `WORKFLOW_STEPS.md` の「方針変更で読む」に従い，関連方針との重複，長文化，判断順の曖昧さを確認する。
 
 ## 関連 URL
 
 - テンプレート: <https://github.com/syzhmr/codex-study-note-template>
 - 推奨 devcontainer: <https://github.com/syzhmr/LaTeX/tree/main/.devcontainer>
 
-## 基本方針
+## 作業開始
 
-- 作業開始時に `git status --short --branch` を確認する。
-- 作業後に `git diff` を確認する。
-- 小小節ごと，または明確な作業単位ごとに commit する。
-- 内容変更とソース整形だけの変更は，できるだけ別 commit にする。
-- 方針ファイルの変更は，本文改訂とは分けて commit する。
-- ビルド生成物，主テキスト PDF，ユーザー作成ノート，参考文献 PDF は，原則として Git に入れない。
-- `sources/text/`，`sources/user_notes/`，`references/pdfs/` の中身は `.gitignore` で除外する。
-- 参考文献を本文で使った場合は，PDF そのものではなく `references/REFERENCE_INDEX.md` や `references/notes/` に根拠を記録する。
+1. `WORKFLOW_STEPS.md` で作業型を決める。
+2. `git status --short --branch` を確認する。
+3. 未コミット変更がある場合は，自分の作業範囲と衝突しないか確認する。
+4. `git var GIT_AUTHOR_IDENT` と `git var GIT_COMMITTER_IDENT` で identity を確認する。
+5. ローカルの `user.name` / `user.email` は原則として置かず，global 設定を使う。プロジェクト固有の理由がある場合だけ local 設定を使い，理由を残す。
 
-## Git identity
+## 作業中
 
-Git の `user.name` と `user.email` は，原則として global 設定で一元管理する。
-個別リポジトリの local 設定は，特別な理由がある場合だけ使う。
+1. 方針変更，本文改訂，ソース整形，参考文献台帳，修正文候補を混ぜない。
+2. TeX 本文を変更した場合は，小節または `subsubsection` ごとにビルドする。
+3. ユーザーが作った未コミット変更は戻さない。
+4. 生成物，主テキスト PDF，参考文献 PDF，ユーザー作成ノート，抽出画像は原則として Git に入れない。
+5. 例外的に PDF や画像を Git 管理する場合は，`PROJECT_PROFILE.md` と `references/REFERENCE_INDEX.md` に理由，権利，容量，分割方針を記録する。
+6. LaTeX 補助ファイル，ビルドキャッシュ，一時作業ディレクトリは Git に入れない。`*:Zone.Identifier` は見つけ次第削除し，Git に入れない。
 
-確認:
+## 作業後
 
-```sh
-git config --global user.name
-git config --global user.email
-git config --local --get user.name
-git config --local --get user.email
-```
+1. `git diff` を確認する。
+2. `git diff --check` を実行する。
+3. commit する単位を決める。
+4. ユーザーから commit 指示がある場合だけ commit する。
+5. commit した場合は `git status --short --branch` を再確認する。
 
-## Codex に依頼するとき
-
-作業前に，Codex に次を確認させる。
-
-```text
-WORKFLOW_STEPS.md を入口として読み，作業前に git status を確認し，既存の変更を壊さないでください。
-変更後は git diff を確認し，TeX 本文を変更した場合はビルドしてください。
-```
-
-Codex が作業した後は，次を確認する。
-
-```sh
-git status --short --branch
-git diff
-```
-
-## commit の目安
+## commit 単位
 
 本文改訂:
 
@@ -58,11 +44,18 @@ git add final/ references/notes/ REVISION_CANDIDATES.md
 git commit -m "Revise section 1.1.1"
 ```
 
+本文改訂に伴う根拠メモ・辞書・候補:
+
+```sh
+git add TERM_DICTIONARY.md TERM_DICTIONARY_CANDIDATES.md REVISION_CANDIDATES.md references/notes/
+git commit -m "Record review notes for section 1.1.1"
+```
+
 方針変更:
 
 ```sh
-git add README.md WORKFLOW_STEPS.md NOTE_POLICY.md HANDWRITTEN_PROOF_POLICY.md LATEX_SOURCE_POLICY.md TERM_DICTIONARY.md
-git commit -m "Update note revision policy"
+git add README.md WORKFLOW_STEPS.md NOTE_POLICY.md HANDWRITTEN_PROOF_POLICY.md LATEX_SOURCE_POLICY.md GIT_WORKFLOW.md HANDWRITTEN_INDEX.md TERM_DICTIONARY.md TERM_DICTIONARY_CANDIDATES.md references/README.md references/REFERENCE_INDEX.md references/notes/
+git commit -m "Update note revision workflow"
 ```
 
 参考文献台帳:
@@ -70,6 +63,20 @@ git commit -m "Update note revision policy"
 ```sh
 git add references/REFERENCE_INDEX.md references/notes/
 git commit -m "Record references for chapter 1"
+```
+
+修正文候補:
+
+```sh
+git add REVISION_CANDIDATES.md
+git commit -m "Record independent review candidates"
+```
+
+PDF や画像を例外的に Git 管理する場合:
+
+```sh
+git add PROJECT_PROFILE.md references/REFERENCE_INDEX.md [approved-file]
+git commit -m "Add approved local reference asset"
 ```
 
 ## 大容量 PDF
@@ -87,6 +94,16 @@ Git LFS を使わない運用では，次の順で対応する。
 ## 共有時の注意
 
 - 著作権や配布条件が不明な PDF は commit しない。
-- 個人の手書きノートや未公開資料は，研究室内で共有してよいか確認する。
+- 個人の手書きノートや未公開資料は，共有してよいか確認する。
 - `.gitignore` を外して PDF を追加する場合は，理由を commit message と参考文献台帳に残す。
 - 研究室共通テンプレートと，各人の個別ノートプロジェクトは分けて管理する。
+
+## commit 実行条件
+
+1. ユーザーが明示的に commit を依頼した。
+2. `git diff --check` が通っている。
+3. TeX 本文変更ならビルド結果を確認済みである。
+4. commit 対象が一つの意味単位にまとまっている。
+5. `git var GIT_AUTHOR_IDENT` と `git var GIT_COMMITTER_IDENT` が通っている。
+
+ユーザーが明示的に commit まで任せた場合は，この条件を満たす作業単位ごとに commit してよい。
