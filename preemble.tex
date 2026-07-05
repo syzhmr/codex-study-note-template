@@ -4,6 +4,7 @@
 
 \usepackage{amsmath,amssymb}
 \usepackage{amsthm}
+\usepackage[OT2,T1]{fontenc}
 \usepackage{mathtools}
 \usepackage{mathrsfs}
 \usepackage{otf}
@@ -11,27 +12,43 @@
 \usepackage[dvipdfmx]{hyperref}
 \usepackage{pxjahyper}
 \usepackage{enumitem}
+\usepackage{fancyhdr}
 \usepackage{tikz}
 \usepackage[most]{tcolorbox}
-\usetikzlibrary{cd}
+\usetikzlibrary{cd,decorations.pathmorphing}
 
 \DeclareMathOperator{\id}{id}
 \DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\End}{End}
 \DeclareMathOperator{\Ker}{Ker}
 \DeclareMathOperator{\Coker}{Coker}
 \DeclareMathOperator{\Image}{Im}
+\DeclareMathOperator{\Spec}{Spec}
+\DeclareMathOperator{\Frac}{Frac}
+\DeclareMathOperator{\Fil}{Fil}
+\DeclareMathOperator{\Rep}{Rep}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\ord}{ord}
 \DeclareMathOperator{\Aut}{Aut}
 \DeclareMathOperator{\Gal}{Gal}
 \DeclareMathOperator{\Tr}{Tr}
 \DeclareMathOperator{\Norm}{N}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\EssIm}{EssIm}
 
+\DeclareSymbolFont{cyrletters}{OT2}{wncyr}{m}{n}
+\DeclareMathSymbol{\Sha}{\mathalpha}{cyrletters}{"58}
+
+\newcommand{\sourcepage}[1]{}
+\newcommand{\noterefpage}[1]{}
+\newcommand{\handref}[1]{}
 \newcommand{\todo}[1]{\par\noindent\textbf{TODO.} #1\par}
-\newcommand{\localqed}{\unskip\nobreak\mbox{\normalfont ♪}}
-\newcommand{\sourcepage}[1]{\marginpar{\scriptsize Text p.#1}}
-\newcommand{\noterefpage}[1]{\marginpar{\scriptsize Note p.#1}}
 
 \definecolor{noteLightLine}{gray}{0.82}
 \definecolor{noteBadgeBack}{gray}{0.80}
+\definecolor{noteLocalQed}{gray}{0.58}
+
+\newcommand{\localqed}{\unskip\nobreak\mbox{\textcolor{noteLocalQed}{\(\blacklozenge\)}}}
 
 \makeatletter
 \newcommand{\noteenvtitle}[2]{%
@@ -57,7 +74,29 @@
 \newcommand{\claimref}[1]{\hyperref[claim:#1]{主張~#1}}
 \newcommand{\rmkref}[1]{\hyperref[rmk:#1]{注意~#1}}
 \newcommand{\exref}[1]{\hyperref[ex:#1]{例~#1}}
+\newcommand{\exerciseref}[1]{\hyperref[exercise:#1]{演習~#1}}
 \newcommand{\namedref}[2]{\hyperref[#1]{#2}}
+\newcommand{\noteNextSectionTarget}{}
+\newcommand{\noteNextChapterTarget}{}
+\newcommand{\notepagelinks}[2]{%
+    \gdef\noteNextSectionTarget{#1}%
+    \gdef\noteNextChapterTarget{#2}}
+\newcommand{\notenavsep}{\hspace{0.5em}{\normalfont |}\hspace{0.5em}}
+\newcommand{\notenavlink}[2]{%
+    \edef\note@target{#1}%
+    \ifx\note@target\@empty
+        \textcolor{gray}{#2}%
+    \else
+        \hyperref[\note@target]{#2}%
+    \fi}
+\newcommand{\noteifnonempty}[2]{%
+    \edef\note@target{#1}%
+    \ifx\note@target\@empty\else #2\fi}
+\newcommand{\noteheaderlinks}{%
+    \footnotesize\sffamily
+    \hyperref[toc]{Contents}%
+    \noteifnonempty{\noteNextSectionTarget}{\notenavsep\notenavlink{\noteNextSectionTarget}{Next subsubsection}}%
+    \noteifnonempty{\noteNextChapterTarget}{\notenavsep\notenavlink{\noteNextChapterTarget}{Next chapter}}}
 \makeatother
 
 \ExplSyntaxOn
@@ -115,10 +154,26 @@
 \newenvironment{claim}[1][]{\begin{notelineenvbox}{noteLightLine}\notelineenvhead{主張}{#1}}{\end{notelineenvbox}}
 \newenvironment{rmk}[1][]{\noteenvhead{注意}{#1}}{\par\medskip}
 \newenvironment{ex}[1][]{\noteenvhead{例}{#1}}{\par\medskip}
+\newenvironment{question}[1][]{\noteenvhead{問}{#1}}{\par\medskip}
+\newenvironment{conjecture}[1][]{\noteenvhead{予想}{#1}}{\par\medskip}
 \newenvironment{recall}[1][]{\noteauxstart{確認}{#1}}{\noteauxend}
 \newenvironment{localdfn}[1][]{\noteauxstart{定義}{#1}}{\noteauxend}
 \newenvironment{gapnote}{\par\medskip\noindent\textbf{行間補足.}\ }{\par\medskip}
 \newenvironment{finalnote}{\par\medskip\noindent\ignorespaces}{\par\medskip}
+
+\setlength{\headheight}{14pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[R]{\noteheaderlinks}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancypagestyle{plain}{%
+    \fancyhf{}%
+    \fancyhead[R]{\noteheaderlinks}%
+    \fancyfoot[C]{\thepage}%
+    \renewcommand{\headrulewidth}{0pt}%
+    \renewcommand{\footrulewidth}{0pt}}
 
 \makeatletter
 \def\@seccntformat#1{\csname the#1\endcsname\ }

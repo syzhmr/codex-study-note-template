@@ -26,6 +26,8 @@ LaTeX/Codex 作業環境をそろえる場合は，上の `LaTeX` リポジト�
 5. 参考文献 PDF を使う場合は `references/pdfs/` に置き，`references/REFERENCE_INDEX.md` に登録する。
 6. `HANDWRITTEN_INDEX.md` に，主テキストとユーザー作成ノートの対応を小小節単位で書く。
 7. `TERM_DICTIONARY.md` と `TERM_DICTIONARY_CANDIDATES.md` をプロジェクトの用語方針に合わせて確認する。
+   このテンプレートには，作成者の専門分野が整数論であることに由来して，可換環論，加群論，代数的整数論，局所体，分岐理論，Galois 表現，類体論など，整数論とその周辺分野の用語辞書がすでに入っている。
+   関連分野では既存辞書を優先し，分野外のプロジェクトでは既存辞書を機械的に一般化せず，必要な語を `TERM_DICTIONARY_CANDIDATES.md` に候補として追加して確認する。
 8. 最初の Codex 作業では，次のように依頼する。
 
 ```text
@@ -45,7 +47,7 @@ WORKFLOW_STEPS.md を入口として読み，PROJECT_PROFILE.md, NOTE_POLICY.md,
 - `REVISION_CANDIDATES.md`: ユーザー確認が必要な修正文候補。
 - `GIT_WORKFLOW.md`: Git 運用方針。
 - `main_final.tex`: 完成版ノートの親ファイル。
-- `preemble.tex`: プリアンブル。定理環境，参照マクロ，局所証明終了記号を定義する。
+- `preemble.tex`: プリアンブル。定理環境，参照マクロ，ヘッダナビゲーション，局所証明終了記号を定義する。
 - `final/`: 完成版ノートの LaTeX 本文。
 - `sources/text/`: 主テキストや講義ノート。
 - `sources/user_notes/`: 手書きノート，自作ノート，ゼミメモ。
@@ -65,6 +67,9 @@ WORKFLOW_STEPS.md を入口として読み，PROJECT_PROFILE.md, NOTE_POLICY.md,
 
 - 主テキストの番号，順序，仮定，結論，記号，証明骨格を基準にする。
 - ユーザー作成ノートは，説明密度，証明の粒度，図式，注意点，疑問点を学ぶための主資料として扱う。
+- 可換図式は省略せず，Milne の可換図式ガイド (<https://www.jmilne.org/not/Mtikz.pdf>) を参照して `tikzcd`，`matrix of math nodes`，直接 `\node` と `\path` による配置の順で TeX 化を検討する。生成画像では代替しない。同型は通常 `\cong` で書き，射の矢印上の同型ラベルには `\sim` を使う。
+- 用語辞書は空の雛形ではない。整数論およびその周辺分野の既存用語が含まれているため，関連する語を新しく訳し直す前に必ず `TERM_DICTIONARY.md` を確認する。
+- 既存辞書と衝突する訳語や，対象分野に依存する訳語は，本文へ直接入れず `TERM_DICTIONARY_CANDIDATES.md` に回す。
 - 完成版では，作業資料名を本文に出さず，自然な数学本文として統合する。
 - 「明らか」「同様」「標準的」で証明の行間を消さない。
 - 地の文や注意の中に実質的な数学的主張がある場合は，必要に応じて `claim` や `lem` として切り出し，直後に証明または確認を書く。
