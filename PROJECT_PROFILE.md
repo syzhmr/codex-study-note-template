@@ -50,6 +50,8 @@ Codex は `WORKFLOW_STEPS.md` を入口として読み，このファイルで�
 - 用語候補: `TERM_DICTIONARY_CANDIDATES.md`
 - 文体資料: `references/notes/japanese_style.md`，`sources/translation_style/`
 - 証明執筆方針: `references/notes/proof_writing_guidance.md`
+- 可換図式: 通常の同型関係に `\cong`，射上の同型ラベルに `\sim` を用い，縦矢印の同型ラベルは矢印方向に合わせて回転させる。元や所属記号が書かれた図式では，元の位置・`\in` の向き・矢印ラベル・同型記号を図式の一部として扱い，本文の文章だけで省略しない。
+- チルダとハット: `\tilde{}`，`\widetilde{}`，`\sim` と `\hat{}`，`\widehat{}` を必ず区別して照合する。
 - 用語の好み: [例: 人名は英字を保つ / 漢字表記にする]
 - 未承認語の扱い: 本文へ直接入れず，候補辞書またはユーザー確認に回す。
 
