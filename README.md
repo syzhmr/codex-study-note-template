@@ -53,6 +53,7 @@ WORKFLOW_STEPS.md を入口として読み，PROJECT_PROFILE.md, NOTE_POLICY.md,
 - `sources/user_notes/`: 手書きノート，自作ノート，ゼミメモ。
 - `sources/translation_style/`: 日本語文体・用語確認の参考資料。
 - `references/pdfs/`: 補助参考文献 PDF。
+- `references/text/`: 参考文献 PDF などから抽出した検索用テキスト，OCR テキスト，Nougat 出力。
 - `references/REFERENCE_INDEX.md`: 参考文献台帳。
 - `references/notes/README.md`: 参考文献メモの探し方。
 - `references/notes/reference_toc_classification.md`: 参考文献の目次分類台帳。
@@ -61,14 +62,19 @@ WORKFLOW_STEPS.md を入口として読み，PROJECT_PROFILE.md, NOTE_POLICY.md,
 - `references/notes/final_bibliography_style.md`: 完成 PDF 末尾の参考文献欄の方針。
 - `references/notes/proof_writing_guidance.md`: 証明執筆の補助方針。
 - `references/notes/japanese_style.md`: 日本語文体・句読点の補助方針。
+- `scripts/`: 参考文献 PDF のテキスト抽出・OCR 補助スクリプト。
 - `work/`: OCR，画像抽出，確認用メモなどの作業場所。
 
 ## 基本方針
 
+- `AGENTS.md` 的な短い恒久ルールと `SKILL.md` 的な詳細手順は，現時点では実ファイルとして分離しない。ただし役割分担は採用する。初見モデルが常に読む原則は `README.md` と `WORKFLOW_STEPS.md` に置き，証明補完，参考文献確認，図式再現，LaTeX 整形など特定作業で使う長い手順は `HANDWRITTEN_PROOF_POLICY.md`，`LATEX_SOURCE_POLICY.md`，`references/notes/README.md` に置く。
+- 将来 Lean を導入する場合は，この分担を移行の足場にする。現段階では Lean，`lake build`，`sorry`，Mathlib 名検索を通常運用に入れない。一方で，TeX 証明を将来形式化できるように，仮定，結論，依存補題，局所主張，hidden assumption，証明 obligation を分けて記録する。
 - 主テキストの番号，順序，仮定，結論，記号，証明骨格を基準にする。
 - ユーザー作成ノートは，説明密度，証明の粒度，図式，注意点，疑問点を学ぶための主資料として扱う。
+- 広い範囲の再生成，1 からの作成，またはユーザー作成ノートとの差分確認を伴う改訂では，本文案を書く前に目標密度プロファイルを作る。主テキスト，ユーザー作成ノート，参考文献の三層を分け，証明補完を伴う場合は gap map と今回埋める obligation を固定する。
 - 可換図式は省略せず，Milne の可換図式ガイド (<https://www.jmilne.org/not/Mtikz.pdf>) を参照して `tikzcd`，`matrix of math nodes`，直接 `\node` と `\path` による配置の順で TeX 化を検討する。生成画像では代替しない。同型は通常 `\cong` で書き，射の矢印上の同型ラベルには `\sim` を使う。縦矢印で同型を示す場合は，横向きの `\sim` のまま置かず，矢印方向に合わせて回転させる。元や所属記号が書かれた可換図式は文章だけに吸収せず，元の位置，`\in` の向き，矢印ラベル，同型記号を PDF 画像で目視確認する。
 - チルダ系の記号 `\tilde{}`，`\widetilde{}`，`\sim` と，ハット系の記号 `\hat{}`，`\widehat{}` は混同しやすいため，主テキスト・ユーザー作成ノート・参考文献で個別に照合する。判読できない場合は推測で置かず，未確定記号として台帳に残す。
+- ユーザー作成ノートは原則として OCR にかけない。参考文献 PDF，主テキスト PDF，完成版 PDF，訳語確認用 PDF は `references/text/` の抽出テキスト，OCR テキスト，Nougat 出力を検索補助として使い，表示数式，グラフ，可換図式，Hasse 図，符号，添字は原 PDF またはページ画像で確認する。
 - 用語辞書は空の雛形ではない。整数論およびその周辺分野の既存用語が含まれているため，関連する語を新しく訳し直す前に必ず `TERM_DICTIONARY.md` を確認する。
 - 既存辞書と衝突する訳語や，対象分野に依存する訳語は，本文へ直接入れず `TERM_DICTIONARY_CANDIDATES.md` に回す。
 - 完成版では，作業資料名を本文に出さず，自然な数学本文として統合する。

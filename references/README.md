@@ -5,14 +5,17 @@
 改訂時は `WORKFLOW_STEPS.md` の「方針変更で読む」に従い，関連方針との重複，長文化，判断順の曖昧さを確認する。
 
 - `pdfs/`: 論文，講義ノート，書籍抜粋などの PDF。
+- `text/`: `pdfs/` などから抽出した検索用テキスト，OCR テキスト，Nougat 出力。
 - `notes/`: 各参考文献の要点，使った定理番号，本文との対応メモ。
 - `REFERENCE_INDEX.md`: 現在置かれている PDF 群，外部参照，紙媒体の棚卸しと要確認事項。
 
 ## 整理方針
 
 - `pdfs/` 以下の物理フォルダは保管場所であり，本文で使う資料の選別基準にはしない。
-- 資料を探すときは，`notes/README.md` の探す順序に従う。まず `notes/reference_toc_classification.md` で目次・冒頭に基づく全件分類と確認状態を見て，次に `notes/reference_inventory_full.md` の優先度・分野タグ・概念タグ，`REFERENCE_INDEX.md`，対象章の `notes/` メモを確認する。
+- 資料を探すときは，`notes/README.md` の探す順序に従う。まず `notes/reference_toc_classification.md` で目次・冒頭に基づく全件分類と確認状態を見て，次に `notes/reference_inventory_full.md` の優先度・分野タグ・概念タグ，`text/` の検索用テキスト，`REFERENCE_INDEX.md`，対象章の `notes/` メモを確認する。
 - ユーザー作成ノート由来の略記・色付き矢印候補がある場合は，`notes/handwritten_reference_aliases.md` で候補文献を正規化してから照合する。
+- 参考文献 PDF は，まず `text/*.txt`，`*.ocr.txt`，`*.mmd` で検索する。未抽出の場合は `../scripts/extract-reference-text.sh` で通常抽出し，スキャン PDF は `../scripts/ocr-reference-text.sh` で OCR する。
+- OCR と Nougat は検索補助である。表示数式，グラフ，可換図式，Hasse 図，符号，添字，引用箇所は原 PDF またはページ画像で確認する。
 - スキャン PDF または検索不能 PDF は画像化して確認する。短い PDF は全ページ，長い PDF は目次，索引，関連章を先に画像化し，画像ファイル名，印刷ページ，節番号，定理番号，本文での用途を `notes/` または `REFERENCE_INDEX.md` に記録する。
 - LMFDB (The L-functions and Modular Forms Database, https://www.lmfdb.org/) は，L 関数，modular 形式，楕円曲線，数体，$p$ 進体，Dirichlet 指標，Artin 表現，Galois 群，一般の群の具体例・不変量・標準的な記号を確認する補助データベースとして使ってよい。使った場合は，検索条件，対象ページ URL，確認した不変量，本文での用途を `notes/` または `REFERENCE_INDEX.md` に残す。
 - PDF を移動・改名する場合は，先に旧パスと新パスの対応を作り，`notes/`，`REFERENCE_INDEX.md`，本文作業メモの参照パスを同時に更新する。単なる見た目の整理だけでは移動しない。

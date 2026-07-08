@@ -39,10 +39,14 @@ Codex は `WORKFLOW_STEPS.md` を入口として読み，このファイルで�
 ## 参考文献
 
 - 参考文献 PDF は `references/pdfs/` に置く。
+- 検索用テキスト，OCR テキスト，Nougat 出力は `references/text/` に置く。
 - 参考文献の棚卸しは `references/REFERENCE_INDEX.md`，`references/notes/reference_toc_classification.md`，`references/notes/reference_inventory_full.md` に書く。
 - 本文で使った箇所は `references/notes/` に記録する。
 - ローカル PDF を使う場合でも，可能なら公開 URL，定理番号，節番号，ページ番号を確認する。
 - 未確認のページ番号・定理番号を推測で書かない。
+- OCR 環境: [例: システム tesseract / 共有 .venv-ocr / 未設定]
+- Nougat 環境: [例: 共有 tools/nougat / 未設定]
+- ユーザー作成ノートの OCR: 原則として行わない。例外がある場合だけ，理由，対象，確認方法をここに記録する。
 
 ## 用語・文体
 

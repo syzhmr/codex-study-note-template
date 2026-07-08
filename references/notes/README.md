@@ -8,14 +8,18 @@
 
 1. `reference_toc_classification.md` で，目次・冒頭に基づく全件分類と確認状態を確認する。
 2. `reference_inventory_full.md` で分野タグ・概念タグ・優先度を確認する。
-3. ユーザー作成ノート由来の略記・色付き矢印候補がある場合は，`handwritten_reference_aliases.md` で最初に照合する候補文献を確認する。
-4. `../REFERENCE_INDEX.md` で既存の個別メモを確認する。
-5. `chapterXX_...` のメモは主にその章で使った記録として読む。
-6. 章をまたぐ内容は `chapterXX_bridge_...`，`..._reference_map.md`，または概念名を含むメモを優先して確認する。
-7. ローカル PDF を読む。
-8. スキャン PDF または検索不能 PDF は画像化して確認する。短い PDF は全ページ，長い PDF は目次，索引，関連章を先に画像化し，画像ファイル名と確認箇所をメモに残す。
-9. LMFDB (The L-functions and Modular Forms Database, https://www.lmfdb.org/) は，L 関数，modular 形式，楕円曲線，数体，$p$ 進体，Dirichlet 指標，Artin 表現，Galois 群，一般の群の具体例・不変量・標準的な記号の確認に使ってよい。使った場合は，導手，レベル，重さ，判別式，体次数，局所体の素数・次数，指標の法，群の位数などの検索条件，URL，確認した対象，不変量，本文での用途をメモに残す。
-10. ローカル資料で根拠が足りない場合だけ，信頼できる外部資料を検索する。
+3. `../text/README.md` と `../text/OCR_QUALITY.md` で検索用テキスト，OCR 済み PDF，低抽出ページを確認する。
+4. ユーザー作成ノート由来の略記・色付き矢印候補がある場合は，`handwritten_reference_aliases.md` で最初に照合する候補文献を確認する。
+5. `../REFERENCE_INDEX.md` で既存の個別メモを確認する。
+6. `chapterXX_...` のメモは主にその章で使った記録として読む。
+7. 章をまたぐ内容は `chapterXX_bridge_...`，`..._reference_map.md`，または概念名を含むメモを優先して確認する。
+8. `../text/*.txt`，`*.ocr.txt`，`*.mmd` を検索して，関連ページ，節，定理番号の候補を絞る。
+9. ローカル PDF を読む。
+10. スキャン PDF または検索不能 PDF は画像化して確認する。短い PDF は全ページ，長い PDF は目次，索引，関連章を先に画像化し，画像ファイル名と確認箇所をメモに残す。
+11. LMFDB (The L-functions and Modular Forms Database, https://www.lmfdb.org/) は，L 関数，modular 形式，楕円曲線，数体，$p$ 進体，Dirichlet 指標，Artin 表現，Galois 群，一般の群の具体例・不変量・標準的な記号の確認に使ってよい。使った場合は，導手，レベル，重さ，判別式，体次数，局所体の素数・次数，指標の法，群の位数などの検索条件，URL，確認した対象，不変量，本文での用途をメモに残す。
+12. ローカル資料で根拠が足りない場合だけ，信頼できる外部資料を検索する。
+
+OCR テキストと Nougat 出力は検索補助である。本文，小さめの数式，定理番号，ページ見出しの候補は抽出テキストで拾ってよいが，大きい表示数式，グラフ，可換図式，Hasse 図，引用に関わる符号や添字は原 PDF またはページ画像で確認する。
 
 ## 新規メモの命名
 
