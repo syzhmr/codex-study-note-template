@@ -1,2 +1,22 @@
 *:Zone.Identifier
 .DS_Store
+
+# LaTeX auxiliary files
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.dvi
+*.fdb_latexmk
+*.fls
+*.idx
+*.ilg
+*.ind
+*.lof
+*.lot
+*.nav
+*.out
+*.run.xml
+*.snm
+*.toc
+*.xdv
