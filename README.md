@@ -28,15 +28,22 @@ LaTeX/Codex 作業環境をそろえる場合は，上の `LaTeX` リポジト�
 7. `TERM_DICTIONARY.md` と `TERM_DICTIONARY_CANDIDATES.md` をプロジェクトの用語方針に合わせて確認する。
    このテンプレートには，作成者の専門分野が整数論であることに由来して，可換環論，加群論，代数的整数論，局所体，分岐理論，Galois 表現，類体論など，整数論とその周辺分野の用語辞書がすでに入っている。
    関連分野では既存辞書を優先し，分野外のプロジェクトでは既存辞書を機械的に一般化せず，必要な語を `TERM_DICTIONARY_CANDIDATES.md` に候補として追加して確認する。
-8. 最初の Codex 作業では，次のように依頼する。
+8. 複数節や方針変更にまたがる作業では，`PLANS.md` に従って
+   `work/plans/` に ExecPlan を作る。
+9. 最初の Codex 作業では，次のように依頼する。
 
 ```text
-WORKFLOW_STEPS.md を入口として読み，PROJECT_PROFILE.md, NOTE_POLICY.md, HANDWRITTEN_INDEX.md, HANDWRITTEN_PROOF_POLICY.md, TERM_DICTIONARY.md, references/REFERENCE_INDEX.md を確認してから，対象範囲を小小節単位で改訂してください。
+AGENTS.md を入口として読み，WORKFLOW_STEPS.md の該当節，
+PROJECT_PROFILE.md, NOTE_POLICY.md, HANDWRITTEN_INDEX.md,
+HANDWRITTEN_PROOF_POLICY.md, TERM_DICTIONARY.md,
+references/REFERENCE_INDEX.md を確認してから，対象範囲を小小節単位で改訂してください。
 ```
 
 ## フォルダ構成
 
-- `WORKFLOW_STEPS.md`: Codex が最初に読む再現可能な作業手順。
+- `AGENTS.md`: Codex が最初に読む短い入口と資料優先順位。
+- `WORKFLOW_STEPS.md`: 依頼型ごとの再現可能な詳細手順。
+- `PLANS.md`: 複数範囲・方針変更用の ExecPlan 形式。
 - `PROJECT_PROFILE.md`: プロジェクト固有の設定。
 - `NOTE_POLICY.md`: ノート作成の全体方針。
 - `HANDWRITTEN_INDEX.md`: 主テキストとユーザー作成ノートの対応表。
@@ -64,14 +71,21 @@ WORKFLOW_STEPS.md を入口として読み，PROJECT_PROFILE.md, NOTE_POLICY.md,
 - `references/notes/japanese_style.md`: 日本語文体・句読点の補助方針。
 - `scripts/`: 参考文献 PDF のテキスト抽出・OCR 補助スクリプト。
 - `work/`: OCR，画像抽出，確認用メモなどの作業場所。
+- `work/plans/`: 複数範囲・方針変更のExecPlan。
+- `work/proof_patterns/`: 個別範囲から得た非規範の証明パターン記録。
 
 ## 基本方針
 
-- `AGENTS.md` 的な短い恒久ルールと `SKILL.md` 的な詳細手順は，現時点では実ファイルとして分離しない。ただし役割分担は採用する。初見モデルが常に読む原則は `README.md` と `WORKFLOW_STEPS.md` に置き，証明補完，参考文献確認，図式再現，LaTeX 整形など特定作業で使う長い手順は `HANDWRITTEN_PROOF_POLICY.md`，`LATEX_SOURCE_POLICY.md`，`references/notes/README.md` に置く。
+- 短い恒久ルールと資料優先順位は `AGENTS.md`，依頼型ごとの手順は
+  `WORKFLOW_STEPS.md`，証明補完・図式再現などの詳細は
+  `HANDWRITTEN_PROOF_POLICY.md`，`LATEX_SOURCE_POLICY.md`，
+  `references/notes/README.md` に分離する。
 - 将来 Lean を導入する場合は，この分担を移行の足場にする。現段階では Lean，`lake build`，`sorry`，Mathlib 名検索を通常運用に入れない。一方で，TeX 証明を将来形式化できるように，仮定，結論，依存補題，局所主張，hidden assumption，証明 obligation を分けて記録する。
 - 主テキストの番号，順序，仮定，結論，記号，証明骨格を基準にする。
 - ユーザー作成ノートは，説明密度，証明の粒度，図式，注意点，疑問点を学ぶための主資料として扱う。
-- 広い範囲の再生成，1 からの作成，またはユーザー作成ノートとの差分確認を伴う改訂では，本文案を書く前に目標密度プロファイルを作る。主テキスト，ユーザー作成ノート，参考文献の三層を分け，証明補完を伴う場合は gap map と今回埋める obligation を固定する。
+- 本文・証明内容を変更する場合は，本文案を書く前に簡潔な目標密度プロファイルと
+  gap mapを作る。主テキスト，ユーザー作成ノート，参考文献の三層を分け，
+  復元・手書き統合・広い再生成・1からの作成・圧縮疑いでは詳細な証明復元表も作る。
 - 可換図式は省略せず，Milne の可換図式ガイド (<https://www.jmilne.org/not/Mtikz.pdf>) を参照して `tikzcd`，`matrix of math nodes`，直接 `\node` と `\path` による配置の順で TeX 化を検討する。生成画像では代替しない。同型は通常 `\cong` で書き，射の矢印上の同型ラベルには `\sim` を使う。縦矢印で同型を示す場合は，横向きの `\sim` のまま置かず，矢印方向に合わせて回転させる。元や所属記号が書かれた可換図式は文章だけに吸収せず，元の位置，`\in` の向き，矢印ラベル，同型記号を PDF 画像で目視確認する。
 - チルダ系の記号 `\tilde{}`，`\widetilde{}`，`\sim` と，ハット系の記号 `\hat{}`，`\widehat{}` は混同しやすいため，主テキスト・ユーザー作成ノート・参考文献で個別に照合する。判読できない場合は推測で置かず，未確定記号として台帳に残す。
 - ユーザー作成ノートは原則として OCR にかけない。参考文献 PDF，主テキスト PDF，完成版 PDF，訳語確認用 PDF は `references/text/` の抽出テキスト，OCR テキスト，Nougat 出力を検索補助として使い，表示数式，グラフ，可換図式，Hasse 図，符号，添字は原 PDF またはページ画像で確認する。

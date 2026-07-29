@@ -1,7 +1,17 @@
 # 再現可能作業手順
 
-このファイルを Codex 作業の入口にする。
+短い恒久入口は `AGENTS.md` とし，このファイルは依頼型ごとの詳細手順を持つ。
 目的は，モデルや実行環境が変わっても，同じ順序で確認し，同じ条件で止まり，同じ形で報告できるようにすることである。
+
+## 最短チェックリスト
+
+1. `git status --short --branch` を確認し，既存変更を保つ。
+2. 依頼型と最小作業単位を固定する。
+3. 本文・証明内容変更では，本文案より先に簡潔な目標密度プロファイルと
+   gap mapを作る。
+4. 手書き資料は正確なページ画像を目視し，OCRだけで確定しない。
+5. 反映後にsource-aware review，internal reader review，loss auditを行う。
+6. build成功だけで数学的・可読性の完成判定をしない。
 
 ## 方針改訂の共通前提
 
@@ -12,7 +22,8 @@
 5. 入口手順に置くべき判断と，各方針ファイルに残すべき詳細を分ける。
 6. 長い説明は，可能な限り小さな判断手順，停止条件，報告項目へ分解する。
 7. 通常の本文改訂では，この整理済みの入口手順に従って読む対象を絞る。
-8. `AGENTS.md` 的な短い恒久ルールは `README.md` とこのファイルに置き，`SKILL.md` 的な長い手順は証明補完，組版，参考文献確認などの個別方針に置く。現時点では実ファイルとしての `AGENTS.md` や `SKILL.md` は作らない。
+8. 短い恒久ルールと資料優先順位は `AGENTS.md`，詳細手順はこのファイルと
+   証明補完・組版・参考文献確認の個別方針に置く。
 9. 将来 Lean を導入する場合に備え，証明補完では仮定，結論，依存補題，局所主張，hidden assumption，証明 obligation を分けて残す。ただし現段階では Lean，`lake build`，`sorry`，Mathlib 名検索を通常作業に入れない。
 
 ## 0. 入口判定
@@ -30,34 +41,37 @@
 4. 依頼範囲が広い場合でも，本文改訂は原則として `subsubsection` 単位に切る。対象に `subsubsection` がない場合だけ，最小の節単位に切る。
 5. 未コミット変更がある場合は，変更元と作業範囲を確認し，無関係な変更を壊さない。
 6. プロジェクト固有の前提は `PROJECT_PROFILE.md` で確認する。主テキスト名，ノート配置，色・記号の意味，Git 管理する例外資料は，方針ファイルではなく `PROJECT_PROFILE.md` に置く。
-7. 広い再生成，1 からの作成，または圧縮が疑われる本文改訂では，本文案を書く前に目標密度プロファイルを作る。
-8. 証明補完を伴う場合は，完成 TeX を書く前に gap map を作り，今回埋める obligation を一つずつ固定する。
+7. 本文・証明内容変更では，本文案を書く前に簡潔な目標密度プロファイルと
+   gap mapを作る。
+8. 証明復元，手書き統合，広い再生成，1からの作成，または圧縮疑いでは
+   詳細な証明復元表も作る。deferred proofは常に専用registerへ入れる。
 
 ## 1. 読むファイル
 
-### 常に読む
+### 最小入口
 
-1. `WORKFLOW_STEPS.md`
-2. `PROJECT_PROFILE.md`
-3. `GIT_WORKFLOW.md`
+1. `AGENTS.md`
+2. `WORKFLOW_STEPS.md` の該当節
+3. `PROJECT_PROFILE.md`
 
 ### 方針変更で読む
 
-1. `WORKFLOW_STEPS.md`
-2. `README.md`
-3. `PROJECT_PROFILE.md`
-4. `NOTE_POLICY.md`
-5. `LATEX_SOURCE_POLICY.md`
-6. `GIT_WORKFLOW.md`
-7. `HANDWRITTEN_INDEX.md`
-8. `HANDWRITTEN_PROOF_POLICY.md`
-9. `TERM_DICTIONARY.md`
-10. 用語候補に関わる場合は `TERM_DICTIONARY_CANDIDATES.md`
-11. 証明執筆の文体・粒度に関わる場合は `references/notes/proof_writing_guidance.md`
-12. 参考文献運用に関わる場合は `references/README.md`，`references/notes/README.md`，`references/text/README.md`，`references/text/OCR_QUALITY.md`，`references/REFERENCE_INDEX.md`，`references/notes/reference_toc_classification.md`，`references/notes/reference_inventory_full.md`
-13. 完成 PDF 末尾の参考文献一覧に関わる場合は `references/notes/final_bibliography_style.md`
-14. ユーザー作成ノートの略記・色付き矢印に関わる場合は `references/notes/handwritten_reference_aliases.md`
-15. 修正文候補の扱いに関わる場合は `REVISION_CANDIDATES.md`
+1. `AGENTS.md`
+2. `WORKFLOW_STEPS.md`
+3. `README.md`
+4. `PROJECT_PROFILE.md`
+5. `NOTE_POLICY.md`
+6. `LATEX_SOURCE_POLICY.md`
+7. `GIT_WORKFLOW.md`
+8. `HANDWRITTEN_INDEX.md`
+9. `HANDWRITTEN_PROOF_POLICY.md`
+10. `TERM_DICTIONARY.md`
+11. 用語候補に関わる場合は `TERM_DICTIONARY_CANDIDATES.md`
+12. 証明執筆の文体・粒度に関わる場合は `references/notes/proof_writing_guidance.md`
+13. 参考文献運用に関わる場合は `references/README.md`，`references/notes/README.md`，`references/text/README.md`，`references/text/OCR_QUALITY.md`，`references/REFERENCE_INDEX.md`，`references/notes/reference_toc_classification.md`，`references/notes/reference_inventory_full.md`
+14. 完成 PDF 末尾の参考文献一覧に関わる場合は `references/notes/final_bibliography_style.md`
+15. ユーザー作成ノートの略記・色付き矢印に関わる場合は `references/notes/handwritten_reference_aliases.md`
+16. 修正文候補の扱いに関わる場合は `REVISION_CANDIDATES.md`
 
 ### 本文改訂で読む
 
@@ -115,8 +129,10 @@ LMFDB (The L-functions and Modular Forms Database, https://www.lmfdb.org/) は�
 2. 対象に対応する主テキスト箇所，既存 TeX，`HANDWRITTEN_INDEX.md` の行を確認する。
 3. 対象に対応するユーザー作成ノート，画像，Markdown，スキャン，授業ノートの有無を列挙する。
 4. 対象に関係する参考文献メモ，用語辞書，証明補完方針を列挙する。
-5. 広い再生成，1 からの作成，または圧縮が疑われる改訂では，`HANDWRITTEN_INDEX.md` の目標密度プロファイル欄に対象範囲と空欄を先に作る。
-6. 出力: 対象 `subsubsection`，編集対象 TeX，対応ノート，参照する方針・台帳の短い一覧，必要なら目標密度プロファイルの空欄。
+5. 本文・証明内容を変更する場合は，`HANDWRITTEN_INDEX.md` の
+   目標密度プロファイル欄に対象範囲と簡潔な空欄を先に作る。
+6. 出力: 対象 `subsubsection`，編集対象 TeX，対応ノート，参照する方針・台帳の
+   短い一覧，目標密度プロファイルの空欄。
 
 対象範囲，編集対象 TeX，対応資料のどれかが固定できない場合は，本文変更へ進まない。
 
@@ -127,8 +143,10 @@ LMFDB (The L-functions and Modular Forms Database, https://www.lmfdb.org/) は�
 3. 命題・定理前後の導入文，地の文の主張，式，結論の述べ方を確認する。
 4. 既存 TeX と主テキストを突き合わせ，落ちている順序，地の文，証明骨格，式，結論を記録する。
 5. 主テキストから意図的に離れる必要がある場合は，理由，対象箇所，差分，代替案を記録する。
-6. 広い再生成，1 からの作成，または圧縮が疑われる改訂では，主テキスト由来の必須項目を目標密度プロファイルの第一層として記録する。定義・命題番号，式，証明骨格，記号，図式候補，本文表現を対象にする。
-7. 出力: 主テキスト骨格，既存 TeX との差分，本文へ保持する順序・記号・表現の一覧，必要なら目標密度プロファイル第一層。
+6. 主テキスト由来の必須項目を目標密度プロファイルの第一層として記録する。
+   定義・命題番号，式，証明骨格，記号，図式候補，本文表現を対象にする。
+7. 出力: 主テキスト骨格，既存 TeX との差分，本文へ保持する順序・記号・表現の
+   一覧，目標密度プロファイル第一層。
 
 主テキストの骨格を抽出できない場合，または意図的な差分の理由を示せない場合は，本文変更へ進まない。
 
@@ -143,7 +161,9 @@ LMFDB (The L-functions and Modular Forms Database, https://www.lmfdb.org/) は�
 7. TikZ/TikZ-cd で正確に再現できない図は，ユーザー作成ノート，板書写真，参考文献の該当箇所をトリミングする候補として記録する。参考文献由来のトリミング画像は，ユーザー許可があるまで本文に取り込まない。
 8. ユーザー作成ノートから証明を埋める場合は，`HANDWRITTEN_PROOF_POLICY.md` の分類に従い，証明の必須ステップ，局所的な Claim/Lemma，計算，図式，定義への戻りを分ける。
 9. ノート由来の追加密度を目標密度プロファイルの第二層として記録する。赤字・青字，図式，Hasse 図，追加計算，Claim/Lemma，中間主張，日本語表現の注意，三点リーダー，アスタリスク標識を対象にする。
-10. 出力: ノート由来の追加ステップ，図式・計算・注意，TikZ/TikZ-cd 化する図式，可換図式の省略確認，トリミング候補と許可状態，参考文献候補，判読不能箇所，本文へ反映する候補一覧，必要なら目標密度プロファイル第二層。
+10. 出力: ノート由来の追加ステップ，図式・計算・注意，TikZ/TikZ-cd 化する
+    図式，可換図式の省略確認，トリミング候補と許可状態，参考文献候補，
+    判読不能箇所，本文へ反映する候補一覧，目標密度プロファイル第二層。
 
 ノートの判読が怪しい箇所，または参考文献候補が判読できない箇所は，推測で本文へ混ぜず未解決点として記録する。
 
@@ -158,15 +178,19 @@ LMFDB (The L-functions and Modular Forms Database, https://www.lmfdb.org/) は�
 7. 定理名・補題名・構成名を使う場合は，主テキスト，原典，既存辞書，または標準的な用例で確認する。
 8. 訳語が未確定または不自然な場合は英語を優先し，日本語候補は本文へ直接入れず `TERM_DICTIONARY_CANDIDATES.md` またはユーザー確認に回す。
 9. 参考文献側の記号，定義順，叙述の癖は本文へ輸入せず，主テキストの記号と順序へ戻す。
-10. 参考文献で確認した補助根拠は，目標密度プロファイルの第三層として記録する。ただし本文では参考文献側の記号や証明順序を採用せず，主テキストの記号，順序，表現へ戻して使う。
-11. 出力: 確認した参考文献箇所，検索した抽出テキスト，画像確認した PDF ページ，LMFDB の検索条件と確認対象，用語判断，未確認参考候補，必要なら目標密度プロファイル第三層。
+10. 参考文献で確認した補助根拠は，目標密度プロファイルの第三層として記録する。
+    ただし本文では参考文献側の記号や証明順序を採用せず，主テキストの記号，
+    順序，表現へ戻して使う。
+11. 出力: 確認した参考文献箇所，検索した抽出テキスト，画像確認した PDF ページ，
+    LMFDB の検索条件と確認対象，用語判断，未確認参考候補，
+    目標密度プロファイル第三層。
 
 参考文献の定理番号，命題番号，ページ，URL，または用語の根拠が確認できない場合は，本文で断定しない。
 
 ### Step 5. 証明復元計画
 
 1. 本文案を書く前に，補うべき定義，文脈，証明段階，既出参照，参考文献根拠を短く列挙する。
-2. 証明補完を伴う場合は，完成 TeX を書く前に gap map を作る。
+2. 本文・証明内容を変更する場合は，完成 TeX を書く前にgap mapを作る。
 3. gap map では，仮定，記号，目標結論，主テキストの証明骨格，ユーザー作成ノート・参考文献で補う箇所，hidden assumption，本文へ入れる obligation，今回埋める obligation を分ける。
 4. 証明内で使う知識が，既に本文，注意，Remark，定義，命題，補題，定理，主張，例で示されていないか確認する。
 5. 新たに証明を考える場合は，その主張が対象分野のどの標準的文脈に属するかを確認し，主テキスト，ノート，対象節の参考文献がその文脈で何を使っているかを先に見る。
@@ -176,7 +200,12 @@ LMFDB (The L-functions and Modular Forms Database, https://www.lmfdb.org/) は�
 9. 証明内の `claim` は，本体証明を進めるための補助事実，帰着，構成，計算，well-defined 性，単射性，全射性，同型性，評価などに限る。
 10. 証明全体を包むだけの主張，証明段階そのものの見出し代わりの主張，直後の一文と同じ内容を環境化しただけの主張は置かない。
 11. 「特殊な場合を示せば十分」とする箇所では，特殊な場合の結論を `claim` にする前に，まず一般の場合から特殊な場合へ帰着する理由を切り出すべきか確認する。
-12. 出力: 証明復元計画，gap map，今回埋める obligation，切り出す主張・補題の候補，既出参照，本文に入れない候補と理由。
+12. 証明復元，手書き統合，広い再生成，1からの作成，または圧縮疑いでは，
+    命題・補題・定理ごとの詳細な証明復元表を作る。
+13. 証明を後置する場合は，本文へ書く前に`HANDWRITTEN_INDEX.md`の
+    deferred proof registerへ正確な回収先を登録する。
+14. 出力: 証明復元計画，gap map，今回埋めるobligation，必要な証明復元表，
+    deferred proof，切り出す主張・補題の候補，既出参照，本文に入れない候補と理由。
 
 定義，well-defined 性，連続性，同変性，単射性，全射性，同型性などの確認項目を列挙できない場合は，本文案を書かない。
 
@@ -203,19 +232,26 @@ LMFDB (The L-functions and Modular Forms Database, https://www.lmfdb.org/) は�
 2. 通常査読では，追加した `claim` が証明全体を包むだけになっていないか，`claim` の証明終了位置まで `\localqed` が引き延ばされていないか，対応する未閉じの補助 `claim` や局所補題がない `\localqed` が残っていないか，地の文の主張が必要以上に環境化されていないかを確認する。
 3. 標準事実を使う場合は，その仮定が現在の状況で満たされることを本文で短く照合しているか確認する。
 4. TeX 本文を変更した場合は，`latexmk -g -dvi -interaction=nonstopmode main_final.tex` でビルドする。
-5. 同じ管理体制に従って，完成版 PDF と参考文献群を見る独立査読を行う。この段階では主テキスト，ユーザー作成ノート，改訂履歴を見ない。
-6. 目標密度プロファイルに対する loss audit を行う。主テキストの必須項目，ユーザー作成ノートの追加密度，参考文献由来の補助根拠のうち，本文に落ちた項目，記号衝突，図式の省略，Hasse 図のラベル欠落，未回収の obligation を確認し，戻すか理由を残す。
+5. 同じ通常査読の別観点として，完成版だけを読むinternal reader reviewを行う。
+   主テキスト・ユーザー作成ノートとの照合はsource-aware reviewで行う。
+6. 目標密度プロファイル，gap map，必要なら証明復元表に対するloss auditを行う。
+   各必須項目の正確な反映先，先行結果，不要理由，またはdeferred proofの
+   正確な行先を確認する。
 7. `git diff` を確認する。
-8. 出力: 通常査読結果，独立査読結果，ビルド結果，loss audit，差分確認結果。
+8. 出力: source-aware review，internal reader review，ビルド結果，
+   loss audit，差分確認結果。
 
-通常査読または独立査読で根拠が不十分な補足，資料間の衝突，ユーザー判断が必要な案が出た場合は，本文へ曖昧に混ぜず `REVISION_CANDIDATES.md` に入れる。
+通常査読で根拠が不十分な補足，資料間の衝突，ユーザー判断が必要な案が出た場合は，
+本文へ曖昧に混ぜず `REVISION_CANDIDATES.md` に入れる。
 
 ### Step 8. 台帳更新と報告
 
 1. 判断を本文へ反映した場合は，根拠を `references/notes/`，`REVISION_CANDIDATES.md`，または該当方針ファイルに残す。
 2. ユーザー作成ノートから得た証明補完の型は，必要に応じて `HANDWRITTEN_PROOF_POLICY.md` の学習ログに追記する。
 3. 未解決点，未確認参考候補，用語候補，資料間衝突を該当ファイルに残す。
-4. 広い再生成，1 からの作成，証明補完を伴った場合は，目標密度プロファイル，gap map，loss audit，未回収の obligation を `HANDWRITTEN_INDEX.md` へ残す。
+4. 本文・証明内容変更では，目標密度プロファイル，gap map，loss auditを
+   `HANDWRITTEN_INDEX.md`へ残す。詳細条件に該当する場合は証明復元表も残し，
+   deferred proofは作業規模にかかわらず専用registerへ入れる。
 5. 変更内容，検査，残課題を報告する。
 6. 出力: 更新した台帳・方針・報告。
 
@@ -244,7 +280,8 @@ LMFDB (The L-functions and Modular Forms Database, https://www.lmfdb.org/) は�
 19. 通常の同型関係に `\sim` を使う，または射の矢印上の同型ラベルに原資料の明示なく `\cong` を使おうとしている。
 20. 縦矢印の同型ラベルを，横向きの `\sim` のまま本文へ入れようとしている。
 21. チルダ系の `\tilde{}`，`\widetilde{}`，`\sim` とハット系の `\hat{}`，`\widehat{}` を原資料照合なしに置き換えようとしている。
-22. 広い再生成，1 からの作成，または圧縮が疑われる改訂で，目標密度プロファイルを作らずに完成 TeX へ進もうとしている。
+22. 本文・証明内容変更で，目標密度プロファイルとgap mapを作らずに
+    完成TeXへ進もうとしている。
 23. 証明補完で gap map と今回埋める obligation を固定せず，複数の未展開 gap を一度に本文へ流し込もうとしている。
 24. TeX ビルド成功を数学的正しさの証明として扱おうとしている。
 25. OCR や Nougat の結果だけで，表示数式，グラフ，可換図式，Hasse 図，符号，添字，引用箇所を確定しようとしている。
