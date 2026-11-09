@@ -299,7 +299,7 @@ LMFDB (The L-functions and Modular Forms Database, https://www.lmfdb.org/) は�
 5. ビルド結果
 6. 目標密度プロファイル，gap map，loss audit の扱い
 7. 未解決点または未回収の obligation
-8. commit するなら推奨 commit 単位
+8. commit・pushの実行結果、または未実行の理由（承認条件はGIT_WORKFLOW.md）
 
 ## 5. 再現性ルール
 
